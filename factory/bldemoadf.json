@@ -1,0 +1,9 @@
+{
+	"name": "bldemoadf",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "cc662b31-a31e-472a-a127-6fe0b0d51c0a",
+		"tenantId": "76a2ae5a-9f00-4f6b-95ed-5d33d77c4d61"
+	}
+}
