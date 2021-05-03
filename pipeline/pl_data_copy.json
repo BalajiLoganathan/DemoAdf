@@ -79,7 +79,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"container": "metadata",
-										"folder": "src_sql",
+										"folder": "pipeline_config/src_sql",
 										"file": {
 											"value": "@item().source_sql_query_path",
 											"type": "Expression"
@@ -125,7 +125,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"container": "metadata",
-										"folder": "tgt_sql",
+										"folder": "pipeline_config/tgt_sql",
 										"file": {
 											"value": "@item().target_sql_query_path",
 											"type": "Expression"
