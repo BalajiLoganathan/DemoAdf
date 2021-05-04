@@ -61,7 +61,13 @@
 									"referenceName": "pl_test_wait",
 									"type": "PipelineReference"
 								},
-								"waitOnCompletion": true
+								"waitOnCompletion": true,
+								"parameters": {
+									"ID": {
+										"value": "@item().id",
+										"type": "Expression"
+									}
+								}
 							}
 						}
 					]
