@@ -75,7 +75,10 @@
 						"parameters": {
 							"container": "staging",
 							"folder": "test",
-							"file": "cust"
+							"file": {
+								"value": "@concat('cust-',utcnow())",
+								"type": "Expression"
+							}
 						}
 					}
 				]
