@@ -16,6 +16,12 @@
 		},
 		"ls_kv_bldemo_properties_typeProperties_baseUrl": {
 			"value": "https://kv-bldemo.vault.azure.net/"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
 		}
 	}
 }
