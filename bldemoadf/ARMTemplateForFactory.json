@@ -7,10 +7,6 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "bldemoadf"
 		},
-		"ls_adls_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'ls_adls'"
-		},
 		"ls_azsql_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ls_azsql'"
@@ -793,12 +789,18 @@
 				"typeProperties": {
 					"url": "[parameters('ls_adls_properties_typeProperties_url')]",
 					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('ls_adls_accountKey')]"
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "ls_kv_bldemo",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "bldemo-blob"
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ls_kv_bldemo')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ls_azsql')]",

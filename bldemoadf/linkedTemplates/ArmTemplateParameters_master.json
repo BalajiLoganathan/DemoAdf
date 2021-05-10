@@ -5,9 +5,6 @@
 		"factoryName": {
 			"value": "bldemoadf"
 		},
-		"ls_adls_accountKey": {
-			"value": ""
-		},
 		"ls_azsql_connectionString": {
 			"value": ""
 		},
