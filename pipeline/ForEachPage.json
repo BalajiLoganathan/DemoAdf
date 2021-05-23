@@ -1,0 +1,124 @@
+{
+	"name": "ForEachPage",
+	"properties": {
+		"activities": [
+			{
+				"name": "GetTotalPages",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Truncate SQL Table",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": {
+						"value": "https://reqres.in/api/users?page=1",
+						"type": "Expression"
+					},
+					"method": "GET"
+				}
+			},
+			{
+				"name": "ForEachPage",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "GetTotalPages",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@range(1,activity('GetTotalPages').output.total_pages)",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "GetPage",
+							"type": "WebActivity",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"url": {
+									"value": "@concat('https://reqres.in/api/users?page=',item())",
+									"type": "Expression"
+								},
+								"method": "GET"
+							}
+						},
+						{
+							"name": "uspInsertPeople stored procedure",
+							"type": "SqlServerStoredProcedure",
+							"dependsOn": [
+								{
+									"activity": "GetPage",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"storedProcedureName": "[dbo].[uspInsertPeople]",
+								"storedProcedureParameters": {
+									"json": {
+										"value": {
+											"value": "@string(activity('GetPage').output)",
+											"type": "Expression"
+										},
+										"type": "String"
+									}
+								}
+							}
+						}
+					]
+				}
+			},
+			{
+				"name": "Truncate SQL Table",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[uspTruncatePeople]"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
